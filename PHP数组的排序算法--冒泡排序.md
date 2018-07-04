@@ -99,14 +99,14 @@ function bubble(&$arr1){
     			$temp = $arr1[$k];
     			$arr1[$k] = $arr1[$k+1];
     			$arr1[$k+1] = $temp;
-                $flag = 1;
+    			$flag = 1;
     		}
     	}
-        if ($flag == 0) 
-        {
-            //如果$flag == 0,说明数组没有进行一次交换,
-            //则该数组已经是一个从小到大的顺序了,因此结束排序
-            break;   
+    	if ($flag == 0)
+    	{
+        	//如果$flag == 0,说明数组没有进行一次交换,
+        	//则该数组已经是一个从小到大的顺序了,因此结束排序
+        	break;
         }
         else
         {
@@ -219,5 +219,4 @@ echo "<br>排序后:" . implode(', ', $arr1);
 
 
 
-# php
-#php
+#
