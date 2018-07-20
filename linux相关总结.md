@@ -1,5 +1,3 @@
-[TOC]
-
 ## Shell指令
 
 查看系统里面的shell类型：cat /etc/shells
