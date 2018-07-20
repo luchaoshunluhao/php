@@ -26,11 +26,11 @@
 
 > apr-1.6.3.tar.gz、apr-util-1.6.1.tar.gz、expat-2.2.5.tar.bz2、http-2.4.29.tar.gz、openssl-1.1.0g.tar.gz、pcre-8.41.tar.gz
 
-###1、将准备好的压缩包进行解压操作：
+### 1、将准备好的压缩包进行解压操作：
 
 `tar -zxf 压缩包名`
 
-###2、进入到httpd文件夹里：
+### 2、进入到httpd文件夹里：
 
 `./configure --help` 可以查看安装的帮助说明
 
@@ -58,11 +58,11 @@
 >
 > --enable-rewrite    基于规则的URL操作
 
-###3、解决prefix的参数
+### 3、解决prefix的参数
 
 将Apache安装到/working目录下：`mkdir /working`
 
-###4、解决with-apr的参数
+### 4、解决with-apr的参数
 
 进入到解压目录apr-1.6.3，查看帮助信息来确定使用参数：`./configure --help`
 
@@ -82,7 +82,7 @@
 
 如果没有出现错误，说明Apache安装成功！
 
-###5、解决with-apr-util的依赖软件expat参数：
+### 5、解决with-apr-util的依赖软件expat参数：
 
 进入expat-2.2.5目录，查看安装软件的帮助信息：`./configure --help`
 
@@ -94,7 +94,7 @@
 
 > 编译的时候，警告直接忽略，错误才要解决
 
-###6、解决with-apr-util的参数
+### 6、解决with-apr-util的参数
 
 进入到apr-util-1.6.1目录下，查看帮助信息：`./configure --help`
 
@@ -108,7 +108,7 @@
 
 `./configure --prefix=/usr/local/apr-util-1.6.1 --with-apr=/usr/local/apr-1.6.3/ && make && make install apr `
 
-###7、解决with-pcre的问题
+### 7、解决with-pcre的问题
 
 进入目录pcre-8.41，查看帮助信息：`./configure --help`
 
@@ -126,7 +126,7 @@
 
 源码安装三步走：`./configure --prefix=/usr/local/zlib-1.2.11 && make && make install`
 
-###9、配置好httpd的参数
+### 9、配置好httpd的参数
 
 进入到Apache安装目录httpd-2.4.29
 
@@ -176,7 +176,7 @@
 
 `echo "/working/httpd-2.4/bin/apachectl start" >> /etc/rc.d/rc.local`
 
-###12、Apache虚拟主机配置
+### 12、Apache虚拟主机配置
 
 > ServerName ：设置域名
 >
@@ -228,7 +228,7 @@
 
 ## Nginx相关
 
-###1、Nginx特点
+### 1、Nginx特点
 
 > 1）热部署 ：修改配置了之后，不用去重启就可以加载修改的内容
 >
@@ -240,7 +240,7 @@
 >
 > 5）具有很高的可靠性
 
-###2、Apache与Nginx服务器区别
+### 2、Apache与Nginx服务器区别
 
 > 1）nginx和apache的软件底层架构不一样。
 >
@@ -296,7 +296,7 @@
 
 将上面三个依赖的压缩包解压后，进入nginx的解压目录。
 
-####开始编译Nginx
+#### 开始编译Nginx
 
 ```nginx编译
 ./configure  --prefix=/working/nginx-1.12.2  \
@@ -315,15 +315,15 @@
 
 如果不存在则创建：`useradd -r www`  //-r ：创建一个系统用户；就是用户编号在500以内的。 
 
-####读取makefile文件，生成二进制文件 
+#### 读取makefile文件，生成二进制文件 
 
 `make`
 
-####安装到系统
+#### 安装到系统
 
 `make install`
 
-###4、Nginx配置文件详解
+### 4、Nginx配置文件详解
 
 打开配置文件：`vim /working/nginx-1-12-2/conf/nginx.conf`
 
@@ -417,7 +417,7 @@
 
 `worker_processes  1;`
 
-###6、单个进程的连接数（并发量）
+### 6、单个进程的连接数（并发量）
 
 ```nginx配置文件
 events {
@@ -457,11 +457,11 @@ location ~ \.php$ {
 
 ### （1）、为Apache安装配置PHP7
 
-####①解压安装包
+#### ①解压安装包
 
 在得到PHP7安装包后解压：`tar -xf php-7.1.13.tar.gz`
 
-####②进入解压目录
+#### ②进入解压目录
 
 查看帮助信息：`./configure --help`
 
@@ -663,7 +663,7 @@ MySQL安装步骤：
 
 > 强调：mysql必须放在这个目录里面，因为这个是别人配置好的（配置在/usr/local/mysql/support-files/下的mysql.server中）。如果你不放在这个目录里面，就会出问题的。 
 
-###3、初始化数据
+### 3、初始化数据
 
 > 这是MySQL5.7版本才会初始化数据，在5.5版本不使用这个
 
@@ -709,7 +709,7 @@ pid-file  = /var/run/mysqld.pid
 
 如果在passwd中存在mysql用户就可以直接使用，如果不存在就使用useradd创建它
 
-### 5、实践初始化
+### 4、实践初始化
 
 `/usr/local/mysql/bin/mysqld --defaults-file=/etc/my.cnf --initialize --user=mysql`
 
@@ -717,7 +717,7 @@ pid-file  = /var/run/mysqld.pid
 
 > 如果把密码搞忘记了，就要去日志文件里面查看。如果还找不到，就删除数据目录下面的所有数据，重新初始化。
 
-### 6、修改文件的属主和数组
+### 5、修改文件的属主和数组
 
 属主：root
 
@@ -731,7 +731,7 @@ pid-file  = /var/run/mysqld.pid
 
 `chown –R mysql /usr/local/mysql/data`
 
-###7、启动MySQL
+### 6、启动MySQL
 
 查看/etc/my.cnf文件，如果文件权限是777，这需要改成644：
 
@@ -743,7 +743,7 @@ pid-file  = /var/run/mysqld.pid
 
 eg：`/usr/local/mysql/support-files/mysql.server start`
 
-###8、登录MySQL
+### 7、登录MySQL
 
 `/usr/local/mysql/bin/mysql -u root -p 回车`
 
