@@ -455,7 +455,7 @@ location ~ \.php$ {
 
 > Apache的PHP是专门配置的，Nginx的PHP也是单独为Nginx配置的，这两个PHP不能混在一起！为了更好区分两种PHP，为Apache安装PHP7，为Nginx安装PHP5.6
 
-### （1）、为Apache安装配置PHP7
+### （1）为Apache安装配置PHP7
 
 #### ①解压安装包
 
