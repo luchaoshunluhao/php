@@ -63,7 +63,7 @@ http://memcached.org/
 
 ## 2、在linux上面查看
 
-###（1）解压
+### （1）解压
 
 解压软件和依赖软件：
 
@@ -125,7 +125,7 @@ http://memcached.org/
 
 `netstat -tanp | grep memcached`
 
-##4、连接Memcache服务器 
+## 4、连接Memcache服务器 
 
 找到客户端：`telnet 192.168.xxx.xx 11211`
 
@@ -419,9 +419,9 @@ class A
 
 > 服务器存储的数据，就是序列化之后的结果。
 
-###（3）使用PHP存储特殊类型
+### （3）使用PHP存储特殊类型
 
-####null
+#### null
 
 ```php
 $mem = new memcached();
