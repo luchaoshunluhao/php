@@ -63,7 +63,7 @@ http://memcached.org/
 
 ## 2、在linux上面查看
 
-###（1）解压
+### （1）解压
 
 解压软件和依赖软件：
 
@@ -95,7 +95,7 @@ http://memcached.org/
 
 `make && make install`
 
-###（4）查看帮助信息
+### （4）查看帮助信息
 
 `/working/memcached/bin/memcached -h`
 
@@ -111,7 +111,7 @@ http://memcached.org/
 >
 > -c：同时连接数
 
-##3、启动Memcache服务器
+## 3、启动Memcache服务器
 
 `/working/memcached/bin/memcached -d -u root`
 
@@ -125,7 +125,7 @@ http://memcached.org/
 
 `netstat -tanp | grep memcached`
 
-##4、连接Memcache服务器 
+## 4、连接Memcache服务器 
 
 找到客户端：`telnet 192.168.xxx.xx 11211`
 
@@ -217,7 +217,7 @@ stats：查看状态；`stats`
 >
 > 如果命中不高，就证明缓存的数据有问题了。应该重新设置一下缓存数据。让缓存有意义。
 
-###（2）PHP中memcached扩展的对象方法对比
+### （2）PHP中memcached扩展的对象方法对比
 
 > 如果用PHP操作memcached，必须把PHP变成memcached服务器的客户端，就要安装memcached的扩展。安装好了，就变成客户端了。
 
@@ -245,13 +245,13 @@ http://pecl.php.net/package-search.php?pkg_name=memcache&bool=AND&submit=Search
 
 上传到linux中，解压后开始操作。
 
-####①安装依赖
+#### ①安装依赖
 
 进入到解压的依赖目录中`/libmemcached-1.0.18`：
 
 `./configure --prefix=/usr/local/libmemcached && make && make install`
 
-####②安装memcached扩展
+#### ②安装memcached扩展
 
 进入到memcached扩展目录`memcached-3.0.4`
 
@@ -293,7 +293,7 @@ http://pecl.php.net/package-search.php?pkg_name=memcache&bool=AND&submit=Search
 
 重启Apache！
 
-####③检查扩展
+#### ③检查扩展
 
 方式一：`php -m`
 
@@ -311,11 +311,11 @@ $res = $mem -> getStats();
 var_dump($res);
 ```
 
-##7、探究Memcache能存储的数据类型
+## 7、探究Memcache能存储的数据类型
 
-###（1）使用PHP存储标量类型
+### （1）使用PHP存储标量类型
 
-####字符类型：
+#### 字符类型：
 
 ```php
 $mem = new memcached();
@@ -328,7 +328,7 @@ $mem -> set('str', $str);
 
 `get str`
 
-####布尔类型
+#### 布尔类型
 
 ```php
 $mem = new memcached();
@@ -376,7 +376,7 @@ mem -> set('f', $f);
 
 > 通过这四种类型，都可以正常存储
 
-###（2）使用PHP存储复合类型
+### （2）使用PHP存储复合类型
 
 #### 数组
 
@@ -419,9 +419,9 @@ class A
 
 > 服务器存储的数据，就是序列化之后的结果。
 
-###（3）使用PHP存储特殊类型
+### （3）使用PHP存储特殊类型
 
-####null
+#### null
 
 ```php
 $mem = new memcached();
