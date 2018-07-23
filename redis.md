@@ -20,13 +20,13 @@
 
 将下载好的压缩包上传到linux中解压后进入目录`/redis-4.0.6`
 
-###①直接使用`meke`安装
+### ①直接使用`meke`安装
 
-###②可以指定安装的位置：
+### ②可以指定安装的位置：
 
 `make PREFIX=/working/redis-4.0.6 install `
 
-###③安装完成后可以查看一下目录：
+### ③安装完成后可以查看一下目录：
 
 `/working/redis-4.0.4/bin`
 
@@ -34,13 +34,13 @@
 
 `./redis-server /etc/redis/6379.conf `
 
-###④准备好配置文件，是解压目录里的`redis.conf`，复制到redis目录
+### ④准备好配置文件，是解压目录里的`redis.conf`，复制到redis目录
 
 `mkdir /working/redis-4.0.6/conf`
 
 `cp redis.conf /working/redis-4.0.6/conf/`
 
-###⑤查看配置文件
+### ⑤查看配置文件
 
 `vim /working/redis-4.0.6/conf/redis.conf`
 
@@ -58,7 +58,7 @@
 >
 > 在263行：`dir ./`配置文件保存的路径
 
-###⑥启动redis服务器
+### ⑥启动redis服务器
 
 `/working/redis-4.0.6/bin/redis-server /working/redis-4.0.6/conf/redis.conf`
 
@@ -84,7 +84,7 @@
 
 > 常用的五种数据类型：字符串（string）、散列（hashes），列表（lists）、集合（sets）、有序集合（sorted sets）
 
-###①String（字符串） 
+### ①String（字符串） 
 
 `set key value`：设置一个值；`set name lu`
 
@@ -270,7 +270,7 @@ flushall ：清空所有的库 ；`flushall`
 >
 > quan:6:redis
 
-##设置客户端登录密码
+## 设置客户端登录密码
 
 打开redis服务器配置文件：`vim /working/redis-4.0.6/conf/redis.conf`
 
@@ -312,7 +312,7 @@ flushall ：清空所有的库 ；`flushall`
 >
 > 子进程的运用用户名，运用用户组，就决定了它获得文件时候，能够获得到的权限。
 
-##在linux命令行操作
+## 在linux命令行操作
 
 `/working/redis-4.0.6/bin/redis-cli key '*'`
 
@@ -394,7 +394,7 @@ flushall ：清空所有的库 ；`flushall`
 >
 > 如果服务器异常之后，再次启动，我们就会从持久化的文件里面读取数据到内存，之前没有持久化的数据，就在也找不到了。
 
-###②append only file （AOF持久化，精细持久化）
+### ②append only file （AOF持久化，精细持久化）
 
 > 用户的每一次操作，我们都可以把操作的语句记录在文件里面。当我们开机的时候，就会读取这些语句，再一次的执行，把数据保存到内存里面，因此在开机的时候会比快照持久化慢。
 
@@ -444,7 +444,7 @@ flushall ：清空所有的库 ；`flushall`
 
 > 主从实现了；实现写读分离；写读分离必须是PHP代码层面上要体现出来。
 
-###（2）Redis Replication的工作原理 
+### （2）Redis Replication的工作原理 
 
 在Slave启动并连接到Master之后，它将主动发送一个SYNC命令。此后Master将启动后台存盘进程，同时收集所有接收到的用于修改数据集的命令，在后台进程执行完毕后，Master将传送整个数据库文件到Slave，以完成一次完全同步。而Slave服务器在接收到数据库文件数据之后将其存盘并加载到内存中。此后，Master继续将所有已经收集到的修改命令，和新的修改命令依次传送给Slaves，Slave将在本次执行这些数据修改命令，从而达到最终的数据同步。
 
@@ -514,7 +514,7 @@ flushall ：清空所有的库 ；`flushall`
 
 ## PHP操作Redis（基本操作） 
 
-###1、linux上安装redis扩展
+### 1、linux上安装redis扩展
 
 得到扩展的压缩包后解压完成后，先生成configure文件，必须进入到解压文件中执行：
 
