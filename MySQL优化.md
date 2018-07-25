@@ -1661,7 +1661,7 @@ $u_sql = "update lock_num set num = $num where id = 1";
 mysqli_query($db, $u_sql);
 ```
 
-###（4）模拟多人并发访问
+### （4）模拟多人并发访问
 
 在linux中执行`/working/httpd-2.4/bin/ab -n 500 -c 50 http://127.0.0.1/lock.php`
 
