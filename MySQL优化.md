@@ -2157,6 +2157,3 @@ date指令：
 `crontab -r`
 
 `crontab -l`
-
-=======
->>>>>>> de8a937b6509e825ceb5aad8df1c535f69584b05
