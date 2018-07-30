@@ -139,10 +139,10 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 实现下主人给动物喂食：
 
 ```php
-	header("content-type:text/html;charset=utf-8");
+    header("content-type:text/html;charset=utf-8");
     //多态
-	class Animal
-	{
+    class Animal
+    {
         public $name;
         public function __construct($name)
         {
@@ -231,26 +231,26 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 下面就把优化部分的代码来再写一下：
 
 ```php
-	class Master
+    class Master
+    {
+	public $name;
+	public function __construct($name)
 	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-		//喂食
-		public function feed(Animal $animal, Food $food)
-		{
-			echo '<br>';
-			$animal -> showInfo();
-			echo '喜欢吃';
-			$food -> showInfo();
-		}
+	    $this -> name = $name;
+        }
+	//喂食
+	public function feed(Animal $animal, Food $food)
+	{
+	    echo '<br>';
+	    $animal -> showInfo();
+            echo '喜欢吃';
+	    $food -> showInfo();
 	}
-	//创建一个主人
-	$master = new Master('小明');
-	$master -> feed($dog, $bone);
-	$master -> feed($cat, $fish);
+    }
+    //创建一个主人
+    $master = new Master('小明');
+    $master -> feed($dog, $bone);
+    $master -> feed($cat, $fish);
 ```
 
 这样写的代码的优越性，还可以体现出一点就是，你在Animal的子类再添加羊类，老虎类，在Food的子类添加草类和兔子类，那么羊吃草，老虎吃兔子，Master这个主人类都不用动，代码照样可以跑起来。这样非常容易进行代码的维护。 
