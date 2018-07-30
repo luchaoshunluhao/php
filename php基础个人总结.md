@@ -15,39 +15,37 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 第一种方法：
 
 ```php
-<?php 
-	//注释
-	/*      
-	//注意，在顶部写注释开头时不要在后面继续写代码，
+    //注释
+    /*      
+    //注意，在顶部写注释开头时不要在后面继续写代码，
     //否则在进行反注释后的本行代码还是会注释，造成代码显示不全的情况
     echo "<br />代码1";
     echo "<br />代码2";
     echo "<br />代码3";
     //*/
-    
+
     //请注意看注释和反注释的区别，在进行反注释时，只需要在注释开头部分添加一个斜杠即可。
-    
+
     //反注释
     //*
     echo "<br />代码1";
     echo "<br />代码2";
     echo "<br />代码3";
-    //*/    
+    //*/   
 ```
 
 ​    第二种方法（使用if语句）：
 
 ```php
-<?php 
-	//注释
-	if(1 == 0)
-	{
+    //注释
+    if(1 == 0)
+    {
         echo "<br />代码1";
         echo "<br />代码2";
         echo "<br />代码3";
-	}
-    //请注意看注释和反注释的区别，在进行反注释时，只需要在if条件判断部分将0改成1即可。   
-    //反注释
+    }
+	//请注意看注释和反注释的区别，在进行反注释时，只需要在if条件判断部分将0改成1即可。   
+	//反注释
     if(1 == 1)
     {
         echo "<br />代码1";
@@ -71,45 +69,39 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 - 前置++
 
   ```php
-  <?php
-  $num1 = 5;
-  ++$num1; 
+      $num1 = 5;
+      ++$num1; 
   
-  $num2 = 6;
-  echo $num1 + ++$num2; //13
-  ?>
+      $num2 = 6;
+      echo $num1 + ++$num2; //13
   ```
 
 - 后置++
 
   ```php
-  <?php
-  $num1 = 5;
-  $num1++;    
-  $num2 = 6; 
-  echo $num1 + $num2 ++; //12
-  ?>
+      $num1 = 5;
+      $num1++;    
+      $num2 = 6; 
+      echo $num1 + $num2 ++; //12
   ```
 
 - 猜猜看
   ```php
-  <?php
-  $a = 1; 
-  $b = ++$a + ++$a; 
-  echo $b; //5
+      $a = 1; 
+      $b = ++$a + ++$a; 
+      echo $b; //5
   
-  $a = 1; 
-  $b = $a++ + ++$a; 
-  echo $b;//4
+      $a = 1; 
+      $b = $a++ + ++$a; 
+      echo $b;//4
   
-  $a = 1; 
-  $b = $a++ + $a++; 
-  echo $b;// 3
+      $a = 1; 
+      $b = $a++ + $a++; 
+      echo $b;// 3
   
-  $a = 1; 
-  $b = ++$a + $a++; 
-  echo $b;//4
-  ?>
+      $a = 1; 
+      $b = ++$a + $a++; 
+      echo $b;//4
   ```
 
   **总结**
@@ -147,79 +139,79 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 实现下主人给动物喂食：
 
 ```php
-header("content-type:text/html;charset=utf-8");
+	header("content-type:text/html;charset=utf-8");
     //多态
 	class Animal
 	{
-		public $name;
-		public function __construct($name)
-		{
-			$this->name = $name;
-		}
-	}
-	class Dog extends Animal
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	class Cat extends Animal
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
+        public $name;
+        public function __construct($name)
+        {
+            $this->name = $name;
+        }
+    }
+    class Dog extends Animal
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    class Cat extends Animal
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
 	
 
-	class Food
-	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-	}
-	class Fish extends Food
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	class Bone extends Food
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	$dog = new Dog('德国黑背');
-	$cat = new Cat('波斯猫');
-	$fish = new Fish('鲤鱼');
-	$bone = new Bone('大棒骨');
+    class Food
+    {
+        public $name;
+        public function __construct($name)
+        {
+            $this -> name = $name;
+        }
+    }
+    class Fish extends Food
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    class Bone extends Food
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    $dog = new Dog('德国黑背');
+    $cat = new Cat('波斯猫');
+    $fish = new Fish('鲤鱼');
+    $bone = new Bone('大棒骨');
 
-	class Master
-	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-		//喂食
-		public function feed($animal, $food)
-		{
-			echo '<br>';
-			$animal -> showInfo();
-			echo '喜欢吃';
-			$food -> showInfo();
-		}
-	}
-	//创建一个主人
-	$master = new Master('小明');
-	$master -> feed($dog, $bone);
-	$master -> feed($cat, $fish);
+    class Master
+    {
+        public $name;
+        public function __construct($name)
+        {
+            $this -> name = $name;
+        }
+        //喂食
+        public function feed($animal, $food)
+        {
+            echo '<br>';
+            $animal -> showInfo();
+            echo '喜欢吃';
+            $food -> showInfo();
+        }
+    }
+    //创建一个主人
+    $master = new Master('小明');
+    $master -> feed($dog, $bone);
+    $master -> feed($cat, $fish);
 ```
 
 这种代码，就是体现的是PHP的多态。但是有人提出质疑：这也太灵活了，这PHP的语法过于松散，很容易造成类型没有约束。
@@ -239,7 +231,7 @@ header("content-type:text/html;charset=utf-8");
 下面就把优化部分的代码来再写一下：
 
 ```php
-class Master
+	class Master
 	{
 		public $name;
 		public function __construct($name)
