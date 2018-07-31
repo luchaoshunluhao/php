@@ -31,7 +31,7 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
     echo "<br />代码1";
     echo "<br />代码2";
     echo "<br />代码3";
-    //*/    
+    //*/   
 ```
 
 ​    第二种方法（使用if语句）：
@@ -453,6 +453,10 @@ func1();	//E_ERROR错误，不会调用自定义错误处理函数
             echo $this -> name;
         }
     }
+<<<<<<< HEAD
+=======
+	
+>>>>>>> e14f075f9f2e0488f637b07b81a91ad1d6a001e8
 
     class Food
     {
@@ -520,26 +524,30 @@ func1();	//E_ERROR错误，不会调用自定义错误处理函数
 下面就把优化部分的代码来再写一下：
 
 ```php
+<<<<<<< HEAD
 	class Master
+=======
+    class Master
+    {
+	public $name;
+	public function __construct($name)
+>>>>>>> e14f075f9f2e0488f637b07b81a91ad1d6a001e8
 	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-		//喂食
-		public function feed(Animal $animal, Food $food)
-		{
-			echo '<br>';
-			$animal -> showInfo();
-			echo '喜欢吃';
-			$food -> showInfo();
-		}
+	    $this -> name = $name;
+        }
+	//喂食
+	public function feed(Animal $animal, Food $food)
+	{
+	    echo '<br>';
+	    $animal -> showInfo();
+            echo '喜欢吃';
+	    $food -> showInfo();
 	}
-	//创建一个主人
-	$master = new Master('小明');
-	$master -> feed($dog, $bone);
-	$master -> feed($cat, $fish);
+    }
+    //创建一个主人
+    $master = new Master('小明');
+    $master -> feed($dog, $bone);
+    $master -> feed($cat, $fish);
 ```
 
 这样写的代码的优越性，还可以体现出一点就是，你在Animal的子类再添加羊类，老虎类，在Food的子类添加草类和兔子类，那么羊吃草，老虎吃兔子，Master这个主人类都不用动，代码照样可以跑起来。这样非常容易进行代码的维护。 
