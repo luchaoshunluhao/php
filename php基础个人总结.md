@@ -15,18 +15,17 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 第一种方法：
 
 ```php
-<?php 
-	//注释
-	/*      
-	//注意，在顶部写注释开头时不要在后面继续写代码，
+    //注释
+    /*      
+    //注意，在顶部写注释开头时不要在后面继续写代码，
     //否则在进行反注释后的本行代码还是会注释，造成代码显示不全的情况
     echo "<br />代码1";
     echo "<br />代码2";
     echo "<br />代码3";
     //*/
-    
+
     //请注意看注释和反注释的区别，在进行反注释时，只需要在注释开头部分添加一个斜杠即可。
-    
+
     //反注释
     //*
     echo "<br />代码1";
@@ -38,16 +37,15 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 ​    第二种方法（使用if语句）：
 
 ```php
-<?php 
-	//注释
-	if(1 == 0)
-	{
+    //注释
+    if(1 == 0)
+    {
         echo "<br />代码1";
         echo "<br />代码2";
         echo "<br />代码3";
-	}
-    //请注意看注释和反注释的区别，在进行反注释时，只需要在if条件判断部分将0改成1即可。   
-    //反注释
+    }
+	//请注意看注释和反注释的区别，在进行反注释时，只需要在if条件判断部分将0改成1即可。   
+	//反注释
     if(1 == 1)
     {
         echo "<br />代码1";
@@ -71,45 +69,39 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 - 前置++
 
   ```php
-  <?php
-  $num1 = 5;
-  ++$num1; 
+      $num1 = 5;
+      ++$num1; 
   
-  $num2 = 6;
-  echo $num1 + ++$num2; //13
-  ?>
+      $num2 = 6;
+      echo $num1 + ++$num2; //13
   ```
 
 - 后置++
 
   ```php
-  <?php
-  $num1 = 5;
-  $num1++;    
-  $num2 = 6; 
-  echo $num1 + $num2 ++; //12
-  ?>
+      $num1 = 5;
+      $num1++;    
+      $num2 = 6; 
+      echo $num1 + $num2 ++; //12
   ```
 
 - 猜猜看
   ```php
-  <?php
-  $a = 1; 
-  $b = ++$a + ++$a; 
-  echo $b; //5
+      $a = 1; 
+      $b = ++$a + ++$a; 
+      echo $b; //5
   
-  $a = 1; 
-  $b = $a++ + ++$a; 
-  echo $b;//4
+      $a = 1; 
+      $b = $a++ + ++$a; 
+      echo $b;//4
   
-  $a = 1; 
-  $b = $a++ + $a++; 
-  echo $b;// 3
+      $a = 1; 
+      $b = $a++ + $a++; 
+      echo $b;// 3
   
-  $a = 1; 
-  $b = ++$a + $a++; 
-  echo $b;//4
-  ?>
+      $a = 1; 
+      $b = ++$a + $a++; 
+      echo $b;//4
   ```
 
   **总结**
@@ -125,7 +117,297 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
   **前置--  ：先减1，后参与运算**
   **后置--  ：先参与运算，后减1**
 
-### 3、多态
+### 3、错误处理
+
+#### （1）常见的错误代号
+
+含义：指在程序运行时，发生的错误，系统会针对每种错误，给出相应的错误代号，并进行提示（报错）。另外，程序如果在运行之前检查语法的时候就发现语法错误，也会报错，也有一个错误代号。
+
+> 常见错误代号有：
+>
+> E_NOTICE：
+>
+> 提示性错误，轻微；
+>
+> 错误发生后，后面的程序继续执行。
+>
+> E_WARNING：
+>
+> 警告性错误，稍微严重；
+>
+> 错误发生后，后面的程序继续执行。
+>
+> E_ERROR：
+>
+> 严重错误/致命错误；
+>
+> 错误发生后，后面的程序不再执行！
+>
+> E_PARSE：
+>
+> 语法错误（语法解析错误）；
+>
+> 语法解释错误，是直接就不运行程序。
+>
+> E_USER_NOTICE：
+>
+> 用户自定义的提示错误
+>
+> E_USER_WARNING：
+>
+> 用户自定义的警告错误
+>
+> E_USER_ERROR：
+>
+> 用户自定义的严重错误
+>
+> E_ALL：
+>
+> 它是一个代表“所有”错误的代号。
+
+> 说明：
+>
+> - 这些错误代号，其实只是系统预先设定的一些常量，他们的值大约是：1， 2， 4， 8， 16.....
+> - 这些错误代号，通常只是用于对错误控制时进行“设置”使用。
+> - 他们是一系列的整数，并具有一定的规律：1,2,4,8,16,32,64， 。。。。
+> - 可以在php.ini中使用（设置）他们
+
+#### （2）错误触发
+
+就是发生了一个错误的意思——即触发了错误。 
+
+有两种情形会触发错误：
+
+- 程序本身有错，则运行时就会触发错误（并提示）。
+
+- 程序本身没错，但出现不符合预计的情形（比如数据不符合要求）。
+
+  此时程序员可以主动触发一个错误，也可以说是由程序员“主动创建一个错误” 。
+
+  ——这就是“用户错误”，包括：
+
+  ​	E_USER_NOTICE：
+
+  ​	E_USER_WARNING：
+
+  ​	E_USER_ERROR：
+
+  自定义错误触发语法：trigger_error(“自定义错误提示内容”,  自定义错误的代号); 
+
+```php
+//认为触发错误：
+//假设年龄在0-60范围有效：
+$age = 88;
+if($age > 60 || $age < 0)
+{
+    trigger_error('年龄不符合本公司业务范围！', E_USER_ERROR);
+}else
+{
+    echo "年龄复合要求，请点击下一步";
+}
+```
+
+#### （3）错误显示设置：
+
+如果有错误发生（触发了错误），默认情况下会被显示在页面（即输出的结果页面）。 
+
+我们可以对此进行设置，以决定以下两点：
+
+- 设置display_errors以决定是否显示错误： 
+
+  ​	在php.ini中设置：      display_errors = On或Off ，这里设置，影响所有使用该php语言引擎的代码（网站页面）； 
+
+  ​	在php文件中设置：    ini_set(‘display_errors’, 1或0);    //1表示显示，0不显示 。在这里设置，只影响当前网页代码本身。
+
+- 设置error_reporting以决定显示哪些类型的错误： 
+
+  ​	在php.ini中设置：      error_reporting = 错误代号1  | 错误代号2  |  .....  //(要显示的就写出来，或者可以写E_ALL, 表示显示所有）。
+
+  ​	在代php文件中，道理类似：ini_set(‘error_reporting’, 错误代号1  | 错误代号2  |  .....） 
+
+#### （4）错误日志设置
+
+如果有错误发生（触发了错误），默认情况下不会将错误信息记录（保存）下来。 
+
+我们可以对此进行设置，以决定以下两点：
+
+- 设置log_errors以决定是否记录错误： 
+
+  ​	php.ini中设置： `log_errors = On 或 Off `，代码文件中设置： `ini_set (‘log_errors’, 1或0) `
+
+- 设置error_log以决定记录到哪里：
+
+  ​	通常，就设置为一个文件名，php系统会在网站的每个文件夹下都建立该文件，并记录错误。php.ini中： `error_log = error.txt;`       //它是纯文本的 。代码中：` ini_set(“error_log”,  ‘error.txt’);`
+
+```php
+//界面不显示错误，但是希望记录记录下来
+ini_set("display_errors", 0);//不显示错误
+ini_set("log_errors", 1);//记录日志
+ini_set("error_log", "myError.txt");//记录到该文件中
+echo $i;//E_NOTICE错误
+func1();//E_ERROR错误
+```
+
+#### （5）自定义错误处理
+
+分两步：
+
+- 声明错误发生时，由我们自己来处理——设定一个错误处理的函数名。
+- 定义该函数，在函数中详细设定错误的处理情况：怎么显示，显示什么，怎么记录，记录什么。
+
+> 特别注意：
+>
+> 如果发生系统的E_ERROR级别错误，则还是不会去调用我们的自定义错误处理机制，还是按系统的处理方式来处理。
+
+```php
+//第1步：声明自定义错误处理函数：
+//一旦发生错误，请找函数myErrorControl去处理
+set_error_handler("myErrorControl");
+
+//第2步：定义该函数：
+function myErrorControl($errCode, $errMsg, $errFile, $errLine){
+	//此函数中就可以任意发挥：想怎么处理就怎么处理！
+	echo "<h1>发生错误！</h1>";
+	//这里，可以来决定（通过if或其他逻辑判断）来显示或记录那些错误信息
+	//下面是演示"显示"这个功能：
+	echo "<br>错误代号：" . $errCode;
+	echo "<br>错误消息：" . $errMsg;
+	echo "<br>错误文件：" . $errFile;
+	echo "<br>错误行号：" . $errLine;
+	//还可以去“记录错误”：记录到文件，或记录到数据库。。。
+}
+echo $i;	//E_NOTICE错误，会调用自定义错误处理函数
+echo $j;	//同上。
+func1();	//E_ERROR错误，不会调用自定义错误处理函数
+```
+
+### 4、系统常用函数
+
+#### （1）跟函数有关的函数
+
+`function_exists(“函数名”)`：判断一个函数是否已经存在；
+
+`func_get_arg( $n )`：在函数内部可用，用于获得第n个实参（n从0开始算起） ；
+
+`func_get_args()`： 在函数内部可用，用于获得所有实参，结果是一个数组；
+
+`func_num_args()`： 在函数内部可用，用于获得实参的个数。
+
+上面3个函数，可以让我们在自定义的函数内部，直接访问（使用）实参数据，而不依赖于形参变量。这种特性，可以给我们定义某种“不确定有几个数据需要计算的”场合。
+
+#### （2）字符串有关常用函数
+
+输出与格式化：
+
+- echo，输出字符，可以输出多个
+- print，输出字符 
+- printf()，输出格式化字符
+- print_r()，输出简化性“数据信息”
+- var_dump()，输出完整性“数据信息”
+
+字符串去除与填充：
+
+- trim()，去除两端字符
+
+- ltrim()，去除左端字符
+
+- rtrim()，去除右端字符
+
+- str_pad()，将一个字符填充到指定的长度
+
+- implode()，将一个数组的每一项使用某个字符“串起来”成为一个“长的字符串”，别名： join()
+
+  `$arr = array(“12”, “345”, “abc”); `
+
+  `$str = implode( $arr, “|”);`，结果：”12|345|abc” 
+
+- explode()，将一个“长的字符串”，使用某个字符进行“分割”得到一个数组
+
+  `$v1 = '12, 345, abc';`
+
+  `$re = explode($v1, ",");  ` 结果为： array(“12”, “345”, “abc”); 
+
+- str_split()：按给定的长度分割字符串
+
+字符串截取： 
+
+- substr()，截取字符串的前多少个字符 
+- strchr()， 查找首次出现的字符，截取出该字符往后的所有字符
+- strrchr()， 反向查找
+
+字符串替换：str_replace()， substr_replace()
+
+字符串长度与位置： 
+
+- strlen()， 取得字符串的长度
+- strpos()， 取得某个字符在某个字符串中的首次出现的位置
+- strrpos()，取得某个字符在某个字符串中的最后一次出现的位置
+- mb_strlen()，求该字符串的“字符个数” 
+
+字符转换：
+
+- strtolower()，  将字符串转化为小写
+- strtoupper()，  将字符串转化为大写
+- lcfirst()， 第一个字母转换小写
+- ucfirst()，第一个字母转换大写
+- ucwords()， 第一个单词转换大写
+
+特殊字符处理：
+
+- nl2br()，将换行符替换为”\<br\>”标签 
+- addslashes()， 将一些特殊字符(‘,  “,  \ )转换成“转义形式”（\’,  \”,  \\\\)
+- htmlspecialchars()， 将html中的字符转换为“实体字符”，比如：”<”转换为`&lt;`
+-  htmlspecialchars_decode()，跟上面的相反过程
+
+#### （3）常用数学函数
+
+- max()，取得若干个数据的最大值
+- min()，取得若干个数据中的最小值
+- round()，对某个数据进行四舍五入（可以设定保留几位小数）
+- ceil()，对某个数“向上取整”：将一个数据往上找出其小的一个整数（含其本身）。 
+
+​        `$n1 = ceil(4.1);`      //5
+
+- floor()，对某个数“向下取整”：将一个数据往下找出其大的一个整数（含其本身）。
+
+​        `$n1 = floor(4.1);`    //4 
+
+- abs()，取得某个数据的绝对值
+
+- sqrt()，计算某个数的开方值
+
+- pow()，对某个数进行“幂运算”（就是获得某个数的若干次方） 
+
+  `$n1 = pow(3, 2);` //3的2次方的结果为9 
+
+- rand()，获得某两个数之间的随机整数（含该两个数）
+
+- mt_rand()，获得某两个数之间的随机整数（含该两个数）
+
+  `$n1 = mt_rand(0, 10);` //随机数在0-10之间
+
+#### （4）常用数组函数
+
+- max()，获取一个数组中的最大值
+- min()，获取一个数组中的最小值
+- count()，获取一个数组的元素个数
+- in_array()，判断一个数据是否在指定数组中。语法形式：$b = in_array( $数组， 数据); //结果true或false
+- range()，生成某个范围的连续值的数组，比如range(3, 9)会得到数组：array(3, 4, 5, 6, 7, 8, 9, );
+- array_keys()，取出一个数组中的所有“键”并放入一个索引数组中
+- array_values()，取出一个数组中的所有“值”并放入一个索引数组中
+- array_push()，将一个或多个数据放入一个数组的“末端”
+- array_pop()，将一个数组的最后一个单元删除，并返回该单元的值
+- array_reverse()，将一个数组的所有单元的顺序进行反转（最前的放最后，最后的放最前） 
+
+常用的排序数组
+
+- sort($arr1)，按值排序,正序,不保留原始键
+- rsort($arr1)，按值排序,倒序,不保留原始键
+- asort()，按值排序,正序,保留原始键
+- arsort()，按值排序,倒序,保留原始键
+- ksort()，按键排序,正序,不保留原始键
+
+### 5、多态
 
 多态通俗的说：就是多种状态，就是指在面向对象中，对象（类）在不同情况下的多种状态（根据使用的上下文）。可以通过继承父类或者实现接口而来体现多态。
 
@@ -147,79 +429,78 @@ php注释基本分为单行注释（//），和多行注释（/**/），这两�
 实现下主人给动物喂食：
 
 ```php
-header("content-type:text/html;charset=utf-8");
+    header("content-type:text/html;charset=utf-8");
     //多态
-	class Animal
-	{
-		public $name;
-		public function __construct($name)
-		{
-			$this->name = $name;
-		}
-	}
-	class Dog extends Animal
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	class Cat extends Animal
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	
+    class Animal
+    {
+        public $name;
+        public function __construct($name)
+        {
+            $this->name = $name;
+        }
+    }
+    class Dog extends Animal
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    class Cat extends Animal
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
 
-	class Food
-	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-	}
-	class Fish extends Food
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	class Bone extends Food
-	{
-		public function showInfo()
-		{
-			echo $this -> name;
-		}
-	}
-	$dog = new Dog('德国黑背');
-	$cat = new Cat('波斯猫');
-	$fish = new Fish('鲤鱼');
-	$bone = new Bone('大棒骨');
+    class Food
+    {
+        public $name;
+        public function __construct($name)
+        {
+            $this -> name = $name;
+        }
+    }
+    class Fish extends Food
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    class Bone extends Food
+    {
+        public function showInfo()
+        {
+            echo $this -> name;
+        }
+    }
+    $dog = new Dog('德国黑背');
+    $cat = new Cat('波斯猫');
+    $fish = new Fish('鲤鱼');
+    $bone = new Bone('大棒骨');
 
-	class Master
-	{
-		public $name;
-		public function __construct($name)
-		{
-			$this -> name = $name;
-		}
-		//喂食
-		public function feed($animal, $food)
-		{
-			echo '<br>';
-			$animal -> showInfo();
-			echo '喜欢吃';
-			$food -> showInfo();
-		}
-	}
-	//创建一个主人
-	$master = new Master('小明');
-	$master -> feed($dog, $bone);
-	$master -> feed($cat, $fish);
+    class Master
+    {
+        public $name;
+        public function __construct($name)
+        {
+            $this -> name = $name;
+        }
+        //喂食
+        public function feed($animal, $food)
+        {
+            echo '<br>';
+            $animal -> showInfo();
+            echo '喜欢吃';
+            $food -> showInfo();
+        }
+    }
+    //创建一个主人
+    $master = new Master('小明');
+    $master -> feed($dog, $bone);
+    $master -> feed($cat, $fish);
 ```
 
 这种代码，就是体现的是PHP的多态。但是有人提出质疑：这也太灵活了，这PHP的语法过于松散，很容易造成类型没有约束。
@@ -239,7 +520,7 @@ header("content-type:text/html;charset=utf-8");
 下面就把优化部分的代码来再写一下：
 
 ```php
-class Master
+	class Master
 	{
 		public $name;
 		public function __construct($name)
