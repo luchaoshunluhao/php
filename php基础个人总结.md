@@ -453,10 +453,6 @@ func1();	//E_ERROR错误，不会调用自定义错误处理函数
             echo $this -> name;
         }
     }
-<<<<<<< HEAD
-=======
-	
->>>>>>> e14f075f9f2e0488f637b07b81a91ad1d6a001e8
 
     class Food
     {
@@ -524,14 +520,10 @@ func1();	//E_ERROR错误，不会调用自定义错误处理函数
 下面就把优化部分的代码来再写一下：
 
 ```php
-<<<<<<< HEAD
-	class Master
-=======
     class Master
     {
 	public $name;
 	public function __construct($name)
->>>>>>> e14f075f9f2e0488f637b07b81a91ad1d6a001e8
 	{
 	    $this -> name = $name;
         }
