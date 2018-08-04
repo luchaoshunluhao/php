@@ -1,4 +1,4 @@
-﻿# php基础个人总结
+# php基础个人总结
 
 标签： php
 
@@ -407,7 +407,196 @@ func1();	//E_ERROR错误，不会调用自定义错误处理函数
 - arsort()，按值排序,倒序,保留原始键
 - ksort()，按键排序,正序,不保留原始键
 
-### 5、多态
+### 5、文件上传
+
+#### （1）文件上传原理
+
+- 上传文件，就是将文件从浏览器端传到服务器端
+- 上传文件，必须使用\<form>标记来向服务器端发数据
+- 上传文件，\<form>标记的method属性值必须是POST
+- 上传文件，\<form>标记的enctype属性值必须是multipart/form-data
+- 上传文件，必须使用\<input type = ‘file’ name=’upload’>标记实现
+
+```html
+	<form action="./upload.php" method="post" name='form1' enctype="multipart/form-data">
+        上传图片：<input type="file" name="uploadFile">
+        <input type="submit" value="上传">
+        <input type="hidden" value="upload" name='ac'>
+	</form>
+```
+
+#### （2）超全局变量数组 $_FILES
+
+使用$_FILES数组，来获取上传文件的信息
+
+```php
+//获取上传文件数据
+print_r($_FILES);
+//可以打印出上传文件的信息，如下：
+/**
+ *Array
+ *(
+ *	[uploadFile] => Array
+ *		(
+ *			[name] => 上传的文件名
+ *			[type] => 文件的MIME类型
+ *			[tmp_name] => 文件在服务器临时位置
+ *			[error] => 错误编号
+ *			[size] => 文件大小
+ *		)
+ *)
+```
+
+#### （3）上传文件错误代码
+
+| 错误代码 | 含义                                                     |
+| -------- | -------------------------------------------------------- |
+| 0        | 没有错误发生，文件上传成功                               |
+| 1        | 上传的文件超过了php.ini中upload_max_filesize选项限制的值 |
+| 2        | 上传文件的大小超过了HTML表单中MAX_FILE_SIZE选项指定的值  |
+| 3        | 文件只有部分被上传                                       |
+| 4        | 没有文件被上传                                           |
+| 6        | 招不到临时文件夹                                         |
+| 7        | 文件写入失败                                             |
+
+#### （4）、查看上传的临时文件位置
+
+- 上传文件的默认临时目录，如果没有指定php.ini配置项upload_tmp_dir的值，则使用操作系统临时目录(c:\windows\temp)。通过phpinfo()函数查看
+- 为什么在 c:\windows\temp 中看不到上专文件呢？因为临时文件是短暂存在的，也就是在脚本执行完毕后，就消失了
+
+```php
+//延迟后再执行一下脚本，用于观察生成的临时文件
+sleep(10);
+//获取上传文件数据
+print_r($_FILES);
+//上传的临时文件，临时文件会在网页执行完毕后删除，因此，需要在临时文件删除前，移动到永久目录下
+```
+
+#### （5）将上传文件移动到新位置
+
+- 描述：本函数检查并确保由 filename 指定的文件是合法的上传文件（即通过 PHP 的 HTTP POST 上传机制所上传的）。如果文件合法，则将其移动为由 destination 指定的文件。最好在临时文件没有消失前移动
+- 语法：**`bool move_uploaded_file ( string $filename , string $destination )`**
+- 参数：$filename，指定上传的临时文件名；$destination，指定新的文件名路径
+- 注意：如果文件已经存在，则会覆盖操作
+
+```php
+//将上传的临时文件，移动到网站根目录下
+$tmp_name = $_FILES['uploadFile']['tmp_name'];
+$dst_name = "./upload/" . $_FILES['uploadFile']['name'];
+move_upload_file($tmp_name, $dst_name);
+```
+
+#### （6）上传文件的相关配置(php.ini)
+
+- upload_tmp_dir配置：修改上传文件的临时目录
+- upload_max_filesize配置：上传单个文件的大小限制，默认为2MB
+- post_max_size配置：规定上传多个文件的总大小，默认为8MB
+- max_file_uploads配置：规定最多上传的文件个数，默认为20个
+- file_uploads配置：上传功能是否开启，默认为on
+
+```php.ini
+file_uploads = On   是否开启文件上传功能
+upload_tmp_dir = 	指定上传临时文件位置，默认为c:\windows\temp
+upload_max_filesize = 2M 	上传单个文件的大小
+max_file_uploads = 20	一次性上传文件总数
+```
+
+#### （7）获取文件路径信息
+
+- 描述：返回文件路径的信息
+- 语法：**`mixed pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] )`**
+- 参数：
+  - $path，要解析的路径
+  - $options，如果省略，返回全部单元，取值有：PATHINFO_DIRNAME(目录名称)、PATHINFO_BASENAME(文件名称)、PATHINFO_EXTENSION(扩展名)、PATH_FILENAME(文件名)
+
+#### （8）检查数组中是否存在某个值
+
+- 描述：检查数组中是否存在某个值
+- 语法：**bool in_array ( mixed $needle , array $arr )**
+- 参数：$needle检索的值，$arr原数组
+
+#### （9）生成唯一ID
+
+- 描述：生成一个唯一ID
+- 语法：**`string uniqid ([ string $prefix = "" [, bool $more_entropy = false ]] )`**
+- 参数：
+  - $prefix前缀字符串，如果省略，返回字符串长度为13
+  - $more_entropy后缀字符集，如果省略，返回字符串长度为23
+
+#### （10）实例：单个文件上传
+
+```php
+    //判断表单是否提交
+    if(isset($_POST['ac']) && $_POST['ac'] == 'upload')
+    {
+        //1、判断上传有没有错误发生
+        if($_FILES['uploadFile']['error'] != 0)
+        {
+            echo '上传文件有错误发生！';
+            die();
+        }
+        //2、上传文件大小不能超过1MB
+        if($_FILES['uploadFile']['size'] > 1024 * 1024)
+        {
+            echo '上传文件超过了1MB的最大限额！';
+            die();
+        }
+        //3、判断上传的文件是不是图片
+        $arr = array('jpg', 'gif', 'png');
+        //4、取出上传文件的扩展名
+        $ext = pathinfo($_FILES['uploadFile']['name'], PATHINFO_EXTENSION);
+        if(!in_array($ext, $arr))
+        {
+            echo '上传的类型不是图片！';
+            die();
+        }
+        //5、移动文件
+        $tmp_name = $_FILES['uploadFile']['tmp_name'];
+        $dst_name = './upload/' . uniqid('s_', true) . '.' . $ext;
+        move_uploaded_file($tmp_name, $dst_name);
+        echo '<br>文件：' . $_FILES['uploadFile']['name'] . '上传成功！';
+    }else
+    {
+        echo '非法操作！';
+    }
+```
+
+#### （11）实例：多个文件上传
+
+```html
+	<form action="./upload3.php" method="post" name='form1' enctype="multipart/form-data">
+        上传图片1：
+        <input type="file" name="uploadFile[]"><br> 上传图片2：
+        <input type="file" name="uploadFile[]"><br> 上传图片3：
+        <input type="file" name="uploadFile[]"><br>
+        <input type="submit" value="上传">
+        <input type="hidden" value="upload" name='ac'>
+    </form>
+```
+
+```php
+    //判断表单是否提交
+    if(isset($_POST['ac']) && $_POST['ac'] == 'upload')
+    {
+        //把三维数组变成两维数组
+        $arr = $_FILES['uploadFile'];
+        //循环数组
+        foreach($arr['name'] as $key => $name)
+        {
+            //判断文件名是否为空，如果不空，则移动文件
+            if($name != '')
+            {
+                $ext = pathinfo($name, PATHINFO_EXTENSION);
+                $tmp_name = $arr['tmp_name'][$key];
+                $dst_name = './upload/' . uniqid() . '.' . $ext;
+                move_uploaded_file($tmp_name, $dst_name);
+            }
+        }
+        echo '上传文件成功！';
+    }
+```
+
+### 6、多态
 
 多态通俗的说：就是多种状态，就是指在面向对象中，对象（类）在不同情况下的多种状态（根据使用的上下文）。可以通过继承父类或者实现接口而来体现多态。
 
