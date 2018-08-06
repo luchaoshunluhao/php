@@ -778,3 +778,255 @@ max_file_uploads = 20	一次性上传文件总数
 > 再来个题外话：
 >
 > 当通过子类去访问父类的属性时，如果这个属性被子类继承，则输出子类的值，如果没有继承，则输出父类的值。 
+
+### 7、面向对象设计模式—单例模式
+
+- 描述：一个类只能创建一个实例对象，不管用什么办法都无法创建第2个对象。
+- 要求（三私一公）
+  - 一私：私有的静态的保存对象的属性
+  - 一私：私有的构造方法，阻止类外new对象
+  - 一私：私有的克隆方法，阻止类外clone对象
+  - 一公：公共的静态的创建对象的方法
+
+```php
+class Db
+{
+    //私有的静态的保存对象的属性
+    private static $obj = NULL;
+    //私有的构造方法：阻止类外new对象
+    private function __construct(){}
+    //私有的克隆方法：阻止类外clone对象
+    private function __clone(){}
+    //公共的静态的创建对象的方法
+    public static function getInstace()
+    {
+        //判断当前类的对象是否存在
+        if(!self::$obj instanceof self)
+        {
+            //如果当前类的对象不存在，则创建并保存它
+            self::$obj = new self;
+        }
+        //返回当前类的对象
+        return self::$obj;
+    }
+}
+//创建数据库类的对象
+$db1 = Db::getInstance();
+$db2 = Db::getInstance();
+var_dump($db1, $db2);//通过打印信息，可以看到两个对象是同一个对象
+```
+
+> 单例设计模式，不管调用多少次，总是一个对象！
+
+### 8、面向对象设计模式—工厂设计模式
+
+#### （1）什么是工厂设计模式
+
+- 根据传递不同的类名参数，返回不同类的对象
+- 工厂模式，就是生产各种的不同类的对象
+- 工厂模式，改变了在类外使用new关键字创建对象的方式，改成了在工厂类中创建类的对象
+- 在类的外部我们无法控制类的行为，但在类内部自己可以控制类的行为
+
+#### （2）工厂设计模式的要求
+
+- 工厂类中的方法，应该是公共的静态的方法
+- 工厂类中有一个私有的静态的保存对象的属性(单例工厂模式)
+- 该方法功能：就是根据传递的不同参数，去创建不同的类实例
+- 提示：工厂设计模式，一般会与单例设计模式搭配使用
+
+#### （3）工厂设计模式的简单应用
+
+./app.php
+
+```php
+header("Content-type:text/html;charset=utf-8");
+//类的自动加载
+spl_autoload_register(function($className){
+    //构建类文件的真实路径
+    $filename = "./libs/$className.class.php";
+    //如果类文件存在，则包含进来
+    if(file_exists($filename))	require_once($filename);
+});
+//创建狗狗类对象
+$dogObj = Factory::getInstance("Dog");
+$dogObj -> showInfo();
+echo "<br>";
+//创建猫猫类对象
+$catObj = Factory::getInstance("Cat");
+$catObj -> showInfo();
+```
+
+./libs/Factory.class.php
+
+```php
+//定义最终的工厂类：生产不同类对象的工厂
+final class Factory
+{
+    //公共的静态的不同类对象：类名可以是变量名
+    public static function getInstance($className)
+    {
+        //返回创建的不同类对象，类名称可以使变量名
+        return new $className();
+    }
+}
+```
+
+./libs/Dog.class.php
+
+```php
+//定义最终的狗狗类
+final class Dog
+{
+    private $name = '哮天犬';
+    private $food = '大棒骨';
+    public function showInfo()
+    {
+        echo "{$this -> name}喜欢吃{$this -> food}";
+    }
+}
+```
+
+./libs/Cat.class.php
+
+```php
+//定义最终的猫猫类
+final class Cat
+{
+    private $name = '加菲猫';
+    private $food = '小金鱼';
+    public function showInfo()
+    {
+        echo "{$this -> name}喜欢吃{$this -> food}";
+    }
+}
+```
+
+#### （4）单例工厂类的实现
+
+将（3）中的Factory.class.php代码改成一下内容：
+
+```php
+//定义最终的工厂类：生产不同类对象的工厂
+//工厂类本身不创建对象
+final class Factory
+{
+    //私有的静态的保存对象的数组
+    private static $arrObj = [];
+    //公共的静态的创建不同类对象的方法
+    public static function getInstace($className)
+    {
+        //判断当前类的对象是否存在
+        if(empty(self::$arrObj[$className]))
+        {
+            self::$arrObj[$className] = new $className;
+        }
+        //返回创建的不同类对象，类名可以是变量名
+        return self::$arrObj[$className];
+    }
+}
+```
+
+在Cat.class.php和Dog.class.php代码的类中增加两个私有方法：
+
+`private function __construct() {}`
+
+`private function __clone() {}`
+
+就可以完成单例工厂。
+
+### 9、无限级分类
+
+#### （1）无限级分类原理（文章表为例）
+
+① 读取原始的文章分类数据到内存中
+
+② 将原始的文章分类数据，转成无限级分类数据（有层级关系）
+
+③ 转换的原则：
+
+​	从根菜单开始，一层一层往下查找，把找到的复合条件的菜单，放到临时数组$categorys中。
+
+​	菜单的缩进空格数：菜单层级 * 空格数
+
+​	菜单层级：根据函数递归调用的次数
+
+#### （2）案例（文章表为例）
+
+只写主要代码了，其余的像命名空间什么的偷懒不写了哈。
+
+① 文章分类控制器
+
+```php
+final class CategoryController
+{
+    public function index()
+    {
+        //获取原始的分类数据
+        $categorys = ...
+        //获取无限级分类数据
+        $categorys = CategoryModel::getInstance() -> categoryList($categorys);
+        //向视图赋值
+        ...
+    }
+}
+```
+
+② 文章分类模型
+
+```php
+final class CategoryModel
+{
+    //受保护的数据表名称
+	protected $table = "category";
+    
+    //静态变量：方法或函数调用完毕，该变量不会消失；
+    //注意事项：静态变量只在函数或方法第1次调用初始化，以后不再初始化；
+    //静态变量只能定义在函数或方法内。
+	/**
+	 * [categoryList description]
+	 * @param   $arrs  [原始的分类数据]
+	 * @param   $level [菜单层级,初始值为0]
+	 * @param   $pid   [上次递归传递过来的id值]
+	 * @return  $categorys      [description]
+	 */
+    //获取无限级分类的方法
+	public function categoryList($arrs, $level = 0, $pid = 0)
+	{
+		//定义静态变量,用于存储每次递归找到的数据
+		static $categorys = [];
+		//循环原始的分类数组
+		foreach ($arrs as $arr) 
+		{
+			//如果本次pid和传递过来的id相等的话,就找到了下层菜单
+			if($arr['pid'] == $pid)
+			{
+				$arr['level'] = $level;//给数组添加level元素
+				$categorys[] = $arr;
+				//递归调用
+				$this->categoryList($arrs, $level + 1, $arr['id']);
+			}
+		}
+		//返回无限级分类的数组
+		return $categorys;
+	}
+}
+```
+
+③ 文章分类视图
+
+```html
+<!-- 使用smarty模板 -->
+<{foreach $categorys as $category}>
+<tr>
+    <td>...</td>
+    <td>
+        <!-- str_repeat()字符串重复的函数 -->
+        <!-- level：菜单层级 -->
+        <{str_repeat('----', $category.level * 2)}>
+        <!-- classname：分类名称 -->
+        <{$categoty.classname}>
+    </td>
+    <td>...</td>
+</tr>
+<{/foreach}>
+```
