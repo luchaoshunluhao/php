@@ -8,7 +8,7 @@ type：不是shell程序自带的命令，使用type查看的时候就会告诉�
 
 cd：参数，- 返回上次所在目录，eg：cd –；~ 表示家目录，eg：cd ~
 
-shutdown：-h 关机；-r 重启；-k 通知；-c借书其它进程的关机或者重新操作。
+shutdown：-h 关机；-r 重启；-k 通知；-c结束其它进程的关机或者重新操作。
 
 halt：关机；reboot：重启
 
