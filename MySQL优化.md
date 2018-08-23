@@ -1624,7 +1624,7 @@ id > 10 ;  锁不是绝对的。这个和事务的级别有关系。
 
 ```mysql
 create table lock_num(
-	id tinyint(1) unsigned not null comment 'id',
+    id tinyint(1) unsigned not null comment 'id',
     num int unsigned not null
 )engine=myisam charset=utf8;
 ```
