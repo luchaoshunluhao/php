@@ -30,7 +30,7 @@ MySQL优化从哪些方面入手：
 
 ## 1、非聚簇（集）结构 
 
-MyISAM主键索引：
+myisam主键索引：
 
 > 主键索引有2个文件，有一个是索引文件，一个是数据文件。
 >
@@ -378,7 +378,7 @@ eg：`alter table innodb drop myname;`
 
 添加普通索引：`alter table table_name add key 取个名称(字段);`
 
-eg：`alter table innodb add key yourage(age;)`
+eg：`alter table innodb add key yourage(age);`
 
 删除普通索引：`alter table table_name drop key 索引名称;`
 
@@ -542,7 +542,7 @@ count：`select count(age) from innodb;`
 
 计算：`select count(distinct sex) / count(sex) from innodb;`
 
-> 这个值匹配度太低了，所有不适合做索引。所有性别是不能做索引。做索引就太浪费资源。
+> 这个值匹配度太低了，所以不适合做索引。所有性别是不能做索引。做索引就太浪费资源。
 
 ### （2）数据的量：
 
@@ -607,8 +607,7 @@ create table `fulltext`(
 在插入一些数据后，创建全文索引：
 
 ```mysql
-alter table `fulltex` tadd fulltext full(content);
-eg:alter table `fulltext` add fulltext fullcon(content);
+alter table `fulltext` add fulltext fullcon(content);
 ```
 
 mysql里面，关键词。一定要加反引号！
@@ -1239,11 +1238,11 @@ eg：`alter table goods_list droppartition winter;`
 >
 >  
 >
-> 注意：移除分区是会进行数据的移动的；所有请注意，一定要在夜深人静的时候操作。
+> 注意：移除分区是会进行数据的移动的；所以请注意，一定要在夜深人静的时候操作。
 >
 >  
 >
-> 删除分区与添加分区，都不会进行数据操作，所有请操作的时候三思而行！
+> 删除分区与添加分区，都不会进行数据操作，所以请操作的时候三思而行！
 >
 >  
 >
@@ -1473,19 +1472,19 @@ B ：对ID是2的加锁，执行访问ID是1的，出现锁等待
 
 读锁：
 
-加锁：`lock tables myisam read;`
+​	加锁：`lock tables myisam read;`
 
-当前用户：读操作！
+​	当前用户：读操作！
 
-当前用户再操作其它表时，会报错。你给谁加了锁，你就要操作哪张表，直到解锁。
+​	当前用户再操作其它表时，会报错。你给谁加了锁，你就要操作哪张表，直到解锁。
 
-其他用户：读操作时是可以进行读的。
+​	其他用户：读操作时是可以进行读的。
 
-但是进行写操作时，会出现锁等待。
+​	但是进行写操作时，会出现锁等待。
 
-当前用户：写操作。此时会报错，写操作是不可以执行的，读的锁，不能写。
+​	当前用户：写操作。此时会报错，写操作是不可以执行的，读的锁，不能写。
 
-解锁：`unlock tables;`
+​	解锁：`unlock tables;`
 
 > 总结：myisam表的读锁，满足所有用户可读；所有用户不可写。
 
@@ -1493,15 +1492,15 @@ B ：对ID是2的加锁，执行访问ID是1的，出现锁等待
 
 写锁：
 
-加锁：`lock tables myisam write;`
+​	加锁：`lock tables myisam write;`
 
-当前用户进行读操作时可以进行，但是其他用户在此时进行读、写操作时会进行锁等待。
+​	当前用户进行读操作时可以进行，但是其他用户在此时进行读、写操作时会进行锁等待。
 
-说明：其他用户是不能再写锁的时候操作读与写的。
+​	说明：其他用户是不能再写锁的时候操作读与写的。
 
-当前用户：写操作时可以执行。
+​	当前用户：写操作时可以执行。
 
-解锁：`unlock tables;`
+​	解锁：`unlock tables;`
 
 > 总结：写锁是当前用户可以读与写的。其他用户是不可以读不可以写的。
 
@@ -1553,7 +1552,7 @@ B ：对ID是2的加锁，执行访问ID是1的，出现锁等待
 
 提交一下事务：`commit;`
 
-总结：当Innodb引擎加读锁的时候，是共享锁。大家都可以读。其他用户不能写。如果当前用户写数据了。锁就会修改成写锁，具体排它性。 
+总结：当Innodb引擎加读锁的时候，是共享锁。大家都可以读。其他用户不能写。如果当前用户写数据了。锁就会修改成写锁，具有排它性。 
 
 #### 当前用户加个写锁
 
@@ -1756,7 +1755,6 @@ fclose($fp);
 > 文件锁只能在单台服务器使用。
 >
 > mysql锁可以在多台服务器使用。
-<<<<<<< HEAD
 
 # 十一、主从服务器
 
