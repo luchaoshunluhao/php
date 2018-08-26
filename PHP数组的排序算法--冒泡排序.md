@@ -1,19 +1,14 @@
-﻿# PHP数组的排序算法--冒泡排序
+# PHP数组的排序算法--冒泡排序
 
-标签（）： php 冒泡排序
+标签： php 冒泡排序
 
 ---
 
 >原理：
-
 >>遍历一个数组，在此过程中，将相邻的两个单元的值进行比较：如果前面的比后面的大，则将两个值交换位置。这个过程到最后，数组中的最大值一定放在最后位置了。
-
 >>如果将上述过程再进行一遍，则又可以确定剩余数据中的最大值放在倒数第二的位置。
-
 >>然后将上述过程继续进行一遍，则可以继续确定剩余数据中的最大值放在倒数第三的位置。
-
 >>依次类推。。。。。。进行若干次，就排好了。
-
 >>比如：
 有数组：$arr = array(18,  22,  12,   15,  23,  9);
 原始数组	18	22	12	15	23	9
@@ -36,23 +31,23 @@
 header("content-type:text/html;charset=utf-8");
 
 //使用冒泡排序对以下数组进行排序为正序
-$arr1 = array(18,  22,  12,   15,  23,  9);
+$arr1 = array(18, 22, 12, 15, 23, 9);
 
 echo "<br>排序前:" . implode(', ', $arr1);
 echo "<hr>";
 function bubble(&$arr1){
     //开始排序:
     $n = count($arr1);
-    for($i = 0; $i < $n-1; $i++)//控制进行的趟数
+    for($i = 0; $i < $n - 1; $i++)//控制进行的趟数
     {
     	//以下这个循环才是从前往后相邻数据进行比较的过程:
-    	for($k = 0; $k < $n-$i-1; $k++)
+    	for($j = 0; $j < $n - $i - 1; $j++)
     	{
-    		if($arr1[$k] > $arr1[$k+1])
+    		if($arr1[$j] > $arr1[$j + 1])
     		{
-    			$temp = $arr1[$k];
-    			$arr1[$k] = $arr1[$k+1];
-    			$arr1[$k+1] = $temp;
+    			$temp = $arr1[$j];
+    			$arr1[$j] = $arr1[$j + 1];
+    			$arr1[$j + 1] = $temp;
     		}
     	}
     	echo "<br>排序中:" . implode(', ', $arr1);
@@ -66,7 +61,7 @@ echo "<br>排序后:" . implode(', ', $arr1);
 
 当运行该代码时，显示如下：
 
-![BubbleSort_01](https://raw.githubusercontent.com/luchaoshunluhao/images/master/BubbleSort_01.png)
+![BubbleSort_01](http://upload-images.jianshu.io/upload_images/11638982-d8ed0124144ad2e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 当然，正常来讲，冒泡排序到此为止就已经结束了，这个代码看上去已经能很好的完成我们正常的排序需求了。
 
@@ -81,7 +76,7 @@ echo "<br>排序后:" . implode(', ', $arr1);
 header("content-type:text/html;charset=utf-8");
 
 //使用冒泡排序对以下数组进行排序为正序
-$arr1 = array(18,  22,  12,   15,  23,  9);
+$arr1 = array(18, 22, 12, 15, 23, 9);
 
 echo "<br>排序前:" . implode(', ', $arr1);
 echo "<hr>";
@@ -89,24 +84,24 @@ function bubble(&$arr1){
     $flag = 0;//设置一个比较位
     //开始排序:
     $n = count($arr1);
-    for($i = 0; $i < $n-1; $i++)//控制进行的趟数
+    for($i = 0; $i < $n - 1; $i++)//控制进行的趟数
     {
     	//以下这个循环才是从前往后相邻数据进行比较的过程:
-    	for($k = 0; $k < $n-$i-1; $k++)
+    	for($j = 0; $j < $n - $i - 1; $j++)
     	{
-    		if($arr1[$k] > $arr1[$k+1])
+    		if($arr1[$j] > $arr1[$j + 1])
     		{
-    			$temp = $arr1[$k];
-    			$arr1[$k] = $arr1[$k+1];
-    			$arr1[$k+1] = $temp;
+    			$temp = $arr1[$j];
+    			$arr1[$j] = $arr1[$j + 1];
+    			$arr1[$j  + 1] = $temp;
     			$flag = 1;
     		}
     	}
-    	if ($flag == 0)
-    	{
-        	//如果$flag == 0,说明数组没有进行一次交换,
-        	//则该数组已经是一个从小到大的顺序了,因此结束排序
-        	break;
+        if ($flag == 0) 
+        {
+            //如果$flag == 0,说明数组没有进行一次交换,
+            //则该数组已经是一个从小到大的顺序了,因此结束排序
+            break;   
         }
         else
         {
@@ -132,21 +127,21 @@ echo "<br>排序后:" . implode(', ', $arr1);
 header("content-type:text/html;charset=utf-8");
 
 //使用冒泡排序对以下数组进行排序为正序
-//$arr1 = array(18,  22,  12,   15,  23,  9);
+//$arr1 = array(18, 22, 12, 15, 23, 9);
 $arr1 = range(1, 10000);
 function bubble(&$arr1){
     //开始排序:
     $n = count($arr1);
-    for($i = 0; $i < $n-1; $i++)//控制进行的趟数
+    for($i = 0; $i < $n - 1; $i++)//控制进行的趟数
     {
     	//以下这个循环才是从前往后相邻数据进行比较的过程:
-    	for($k = 0; $k < $n-$i-1; $k++)
+    	for($j = 0; $j < $n - $i - 1; $j++)
     	{
-    		if($arr1[$k] > $arr1[$k+1])
+    		if($arr1[$j] > $arr1[$j + 1])
     		{
-    			$temp = $arr1[$k];
-    			$arr1[$k] = $arr1[$k+1];
-    			$arr1[$k+1] = $temp;
+    			$temp = $arr1[$j];
+    			$arr1[$j] = $arr1[$j + 1];
+    			$arr1[$j + 1] = $temp;
     		}
     	}
     }
@@ -160,7 +155,7 @@ echo "<br>排序后:" . implode(', ', $arr1);
  ?>
 ```
 
-![BubbleSort_02](https://raw.githubusercontent.com/luchaoshunluhao/images/master/BubbleSort_02.png)
+![BubbleSort_02](http://upload-images.jianshu.io/upload_images/11638982-38faee5b3ea108a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 由上图可以看到，在1-10000的无序数组使用冒泡法排好后需要十秒左右，下面我们再对比一下优化后的代码:
 
@@ -169,23 +164,23 @@ echo "<br>排序后:" . implode(', ', $arr1);
 header("content-type:text/html;charset=utf-8");
 
 //使用冒泡排序对以下数组进行排序为正序
-//$arr1 = array(18,  22,  12,   15,  23,  9);
+//$arr1 = array(18, 22, 12, 15, 23, 9);
 $arr1 = range(1, 10000);
 function bubble(&$arr1){
     $flag = 0;//设置一个比较位
     //开始排序:
     $n = count($arr1);
-    for($i = 0; $i < $n-1; $i++)//控制进行的趟数
+    for($i = 0; $i < $n - 1; $i++)//控制进行的趟数
     {
     	//以下这个循环才是从前往后相邻数据进行比较的过程:
-    	for($k = 0; $k < $n-$i-1; $k++)
+    	for($j = 0; $j < $n - $i - 1; $j++)
     	{
-    		if($arr1[$k] > $arr1[$k+1])
+    		if($arr1[$j] > $arr1[$j + 1])
     		{
-    			$temp = $arr1[$k];
-    			$arr1[$k] = $arr1[$k+1];
-    			$arr1[$k+1] = $temp;
-                $flag = 1;
+    			$temp = $arr1[$j];
+    			$arr1[$j] = $arr1[$j + 1];
+    			$arr1[$j + 1] = $temp;
+    			$flag = 1;
     		}
     	}
     	if ($flag == 0) 
@@ -211,12 +206,8 @@ echo "<br>排序后:" . implode(', ', $arr1);
  ?>
 ```
 
-![BubbleSort_03](https://raw.githubusercontent.com/luchaoshunluhao/images/master/BubbleSort_03.png)
+![BubbleSort_03](http://upload-images.jianshu.io/upload_images/11638982-a5e75d699fcb2282.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 显然,优化后的代码，排序1-10000的无序数组时在完成排序后所需要的时间仅仅是一秒不到，这就是优化的好处。
 
 非常感谢您能抽出时间来阅读本次的文章，以上就是本篇的php数组冒泡排序的介绍，由于笔者也是处于学习阶段，如果出现错误的地方，欢迎各位朋友进行指正。
-
-
-
-#
