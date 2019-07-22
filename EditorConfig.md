@@ -19,7 +19,6 @@
     "git.confirmSync"                     : false,
     // "terminal.integrated.fontFamily"      : "Meslo LG M DZ Regular for Powerline",
     "editor.fontWeight"    : "bold",
-    "sync.gist"            : "ab269dc3a5c73a050b1d20cb1f268c86",
     "workbench.iconTheme": "vscode-icons",
 }
 ```
