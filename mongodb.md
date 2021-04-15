@@ -18,7 +18,7 @@ mongodb 有库的概念，库的下面是集合（表）的概念，集合的里
 
 ### 3、MongoDB的安装与配置 
 
-下载地址： https://www.mongodb.com/ 
+下载地址：https://www.mongodb.com/ 
 
 #### 安装
 

@@ -39,7 +39,7 @@ memcached可以支持的并发数量上万。所有很多时候，memcached都�
 在代码里使用它：
 
 ```php
-//连接Memcached
+//连接memcached
 ...
 $data = $mem -> get('data');
 if(empty($data))
